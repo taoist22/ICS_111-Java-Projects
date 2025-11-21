@@ -34,18 +34,50 @@ public class MathExpression {
     this.operator = operator;
   }
 
-  public getOperandA()
-  {
-    return operandA;
+  /**
+   * Getter for the first operand of the expression.
+   *
+   * @return The first operand of the expression.
+   */
+  public int getOperandA() {
+    return this.operandA;
   }
 
-  public getOperandB()
-  {
-    return operandB;
+  /**
+   * Getter for the second operand of the expression.
+   *
+   * @return The second operand of the expression.
+   */
+  public int getOperandB() {
+    return this.operandB;
   }
 
-  public getOperator()
-  {
-    return operator;
+  /**
+   * Getter for the operator of the expression.
+   *
+   * @return The operator of the expression.
+   */
+  public String getOperator() {
+    return this.operator;
+  }
+
+  /**
+   * Method to calculate the result of the expression.
+   * 
+   * @return The result of the expression.
+   */
+  public int calculate() {
+    switch (operator) {
+      case "+":
+        return operandA + operandB;
+      case "-":
+        return operandA - operandB;
+      case "*":
+        return operandA * operandB;
+      case "/":
+        return operandA / operandB;
+      default:
+        return 0;
+    }
   }
 }
