@@ -10,7 +10,7 @@ import java.awt.Insets;
 import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.swing.JOptionPane;
+import javax.swing.JOptionPane;
 
 /**
  * Create a panel for MathExpression class.
@@ -149,6 +149,14 @@ public class MathExpressionPanel extends JPanel {
           currentQuestionIndex = NUM_QUESTIONS - 1;
         }
         updateDisplay();
+
+      }
+    });
+
+    submitButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        gradeQuiz();
       }
     });
   }
@@ -181,9 +189,8 @@ public class MathExpressionPanel extends JPanel {
     }
 
   }
-  
-  private void gradeQuiz()
-  {
+
+  private void gradeQuiz() {
     saveAnswer();
 
     int numCorrect = 0;
@@ -192,20 +199,17 @@ public class MathExpressionPanel extends JPanel {
 
     for (int i = 0; i < NUM_QUESTIONS; i++) {
       int correctAnswer = expressions[i].calculate();
-      
-      if (userAnswers[i] == correctAnswer)
-      {
+
+      if (userAnswers[i] == correctAnswer) {
         numCorrect++;
-      }
-      else
-      {
+      } else {
         mistakesList = expressions[i].toString() + " = " + correctAnswer + ", but your answer was "
-                       + userAnswers[i] + "/n";
-      }
+            + userAnswers[i] + "/n";
       }
     }
-
-
-
+    double percentage = (double) numCorrect / NUM_QUESTIONS * 100;
+    String message = String.format("You got %.2f%% of the questions correct\n%s", percentage, mistakesList);
+    JOptionPane.showMessageDialog(this, message, "Quiz Complete", JOptionPane.INFORMATION_MESSAGE);
   }
+
 }
