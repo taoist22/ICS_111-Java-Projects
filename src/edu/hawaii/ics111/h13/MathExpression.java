@@ -65,6 +65,7 @@ public class MathExpression {
    * Method to calculate the result of the expression.
    * 
    * @return The result of the expression.
+   * @throws IllegalArgumentException If the operator is not supported.
    */
   public int calculate() {
     switch (operator) {
@@ -76,8 +77,10 @@ public class MathExpression {
         return operandA * operandB;
       case "/":
         return operandA / operandB;
+      case "%":
+        return operandA % operandB;
       default:
-        return 0;
+        throw new IllegalArgumentException("Invalid operator: " + operator);
     }
   }
 }
