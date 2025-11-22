@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.util.Random;
 
 /**
@@ -79,18 +82,46 @@ public class MathExpressionPanel extends JPanel {
       expressions[i] = new MathExpression(operandA, operandB, operator);
 
     }
+    /**
+     * Initialize the GUI components.
+     */
     questionNumberLabel = new JLabel("Question 0");
-    this.add(questionNumberLabel);
-    answerField = new JTextField(10);
-    this.add(answerField);
-    submitButton = new JButton("Submit Answer");
-    this.add(submitButton);
-    nextButton = new JButton("Next Question");
-    this.add(nextButton);
-    previousButton = new JButton("Previous Question");
-    this.add(previousButton);
     questionLabel = new JLabel(expressions[0].toString());
-    this.add(questionLabel);
+    answerField = new JTextField(10);
+
+    submitButton = new JButton("Submit Answer");
+    nextButton = new JButton("Next Question");
+    previousButton = new JButton("Previous Question");
+    /**
+     * Create a subpanel for buttons.
+     */
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.add(previousButton);
+    buttonPanel.add(nextButton);
+    buttonPanel.add(submitButton);
+
+    /**
+     * Set up the GridBagLayout.
+     */
+    this.setLayout(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+    c.insets = new Insets(10, 10, 10, 10);
+    c.gridx = 0;
+
+    /**
+     * Add components
+     */
+    c.gridx = 0;
+    this.add(questionNumberLabel, c);
+
+    c.gridy = 1;
+    this.add(questionLabel, c);
+
+    c.gridy = 2;
+    this.add(answerField, c);
+
+    c.gridy = 3;
+    this.add(buttonPanel, c);
 
     currentQuestionIndex = 0;
   }
