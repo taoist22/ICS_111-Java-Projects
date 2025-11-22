@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.Random;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Create a panel for MathExpression class.
@@ -128,8 +130,11 @@ public class MathExpressionPanel extends JPanel {
 
   /**
    * Method to update labels and text fields based on the current question index.
+   * This method uses answerField.requestFocus to automatically place the cursor
+   * in the input box.
+   * Reference: https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html.
    */
-  public void updateDisplay() {
+  private void updateDisplay() {
     questionNumberLabel.setText("Question " + currentQuestionIndex);
 
     questionLabel.setText(expressions[currentQuestionIndex].toString());
@@ -141,5 +146,37 @@ public class MathExpressionPanel extends JPanel {
     }
 
     answerField.requestFocus();
+  }
+
+  private void saveAnswer() {
+    try {
+      userAnswers[currentQuestionIndex] = Integer.parseInt(answerField.getText());
+    } catch (NumberFormatException e) {
+      userAnswers[currentQuestionIndex] = 0;
+    }
+
+    nextButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        saveAnswer();
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= NUM_QUESTIONS) {
+          currentQuestionIndex = 0;
+        }
+        updateDisplay();
+      }
+    });
+
+    previousButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        saveAnswer();
+        currentQuestionIndex--;
+        if (currentQuestionIndex < 0) {
+          currentQuestionIndex = NUM_QUESTIONS - 1;
+        }
+        updateDisplay();
+      }
+    });
   }
 }
