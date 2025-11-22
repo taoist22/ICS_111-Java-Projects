@@ -59,6 +59,10 @@ public class MathExpressionPanel extends JPanel {
    * Button to move to the previous question.
    */
   private JButton previousButton;
+  /**
+   * Button to reset the game.
+   */
+  private JButton resetButton;
 
   /**
    * Constructor for the MathExpressionPanel class.
@@ -95,6 +99,7 @@ public class MathExpressionPanel extends JPanel {
     submitButton = new JButton("Submit Answer");
     nextButton = new JButton("Next Question");
     previousButton = new JButton("Previous Question");
+    resetButton = new JButton("Reset Game");
     /**
      * Create a subpanel for buttons.
      */
@@ -102,6 +107,7 @@ public class MathExpressionPanel extends JPanel {
     buttonPanel.add(previousButton);
     buttonPanel.add(nextButton);
     buttonPanel.add(submitButton);
+    buttonPanel.add(resetButton);
 
     /**
      * Set up the GridBagLayout.
@@ -159,6 +165,14 @@ public class MathExpressionPanel extends JPanel {
         gradeQuiz();
       }
     });
+
+    resetButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        resetQuiz();
+      }
+    });
+    updateDisplay();
   }
 
   /**
@@ -181,6 +195,9 @@ public class MathExpressionPanel extends JPanel {
     answerField.requestFocus();
   }
 
+  /**
+   * Method to save the user's answer for the current question.
+   */
   private void saveAnswer() {
     try {
       userAnswers[currentQuestionIndex] = Integer.parseInt(answerField.getText());
@@ -190,6 +207,9 @@ public class MathExpressionPanel extends JPanel {
 
   }
 
+  /**
+   * Method to grade the quiz and display the results.
+   */
   private void gradeQuiz() {
     saveAnswer();
 
@@ -203,8 +223,8 @@ public class MathExpressionPanel extends JPanel {
       if (userAnswers[i] == correctAnswer) {
         numCorrect++;
       } else {
-        mistakesList = expressions[i].toString() + " = " + correctAnswer + ", but your answer was "
-            + userAnswers[i] + "/n";
+        mistakesList += expressions[i].toString() + " = " + correctAnswer +
+            ", but your answer was " + userAnswers[i] + "\n";
       }
     }
     double percentage = (double) numCorrect / NUM_QUESTIONS * 100;
@@ -212,4 +232,37 @@ public class MathExpressionPanel extends JPanel {
     JOptionPane.showMessageDialog(this, message, "Quiz Complete", JOptionPane.INFORMATION_MESSAGE);
   }
 
+  /**
+   * Resets the game with new questions and clears user answers.
+   */
+  private void resetQuiz() {
+    userAnswers = new int[NUM_QUESTIONS];
+    expressions = new MathExpression[NUM_QUESTIONS];
+    currentQuestionIndex = 0;
+
+    Random generator = new Random();
+
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
+      String[] operators = { "+", "-", "*", "/", "%" };
+
+      int operandA = generator.nextInt(20) + 1;
+      int operandB = generator.nextInt(20) + 1;
+      String operator = operators[generator.nextInt(5)];
+
+      if ((operator.equals("%") || operator.equals("/")) && operandB == 0) {
+        operandB = generator.nextInt(20) + 1;
+      }
+
+      expressions[i] = new MathExpression(operandA, operandB, operator);
+    }
+    answerField.setEnabled(true);
+    answerField.setText("");
+    answerField.requestFocus();
+
+    nextButton.setEnabled(true);
+    previousButton.setEnabled(true);
+    submitButton.setEnabled(true);
+
+    updateDisplay();
+  }
 }
