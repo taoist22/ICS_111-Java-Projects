@@ -83,4 +83,15 @@ public class MathExpression {
         throw new IllegalArgumentException("Invalid operator: " + operator);
     }
   }
+
+  /**
+   * toString method to print the expression in the format "operandA operator
+   * operandB".
+   * 
+   * @return The string representation of the expression.
+   */
+  @Override
+  public String toString() {
+    return this.operandA + " " + this.operator + " " + this.operandB;
+  }
 }
