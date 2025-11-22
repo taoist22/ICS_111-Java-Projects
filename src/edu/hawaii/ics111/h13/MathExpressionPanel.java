@@ -125,4 +125,21 @@ public class MathExpressionPanel extends JPanel {
 
     currentQuestionIndex = 0;
   }
+
+  /**
+   * Method to update labels and text fields based on the current question index.
+   */
+  public void updateDisplay() {
+    questionNumberLabel.setText("Question " + currentQuestionIndex);
+
+    questionLabel.setText(expressions[currentQuestionIndex].toString());
+
+    if (userAnswers[currentQuestionIndex] != 0) {
+      answerField.setText(Integer.toString(userAnswers[currentQuestionIndex]));
+    } else {
+      answerField.setText("");
+    }
+
+    answerField.requestFocus();
+  }
 }
