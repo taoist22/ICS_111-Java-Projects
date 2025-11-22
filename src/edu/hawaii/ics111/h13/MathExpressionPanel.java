@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.swing.JOptionPane;
 
 /**
  * Create a panel for MathExpression class.
@@ -126,6 +127,30 @@ public class MathExpressionPanel extends JPanel {
     this.add(buttonPanel, c);
 
     currentQuestionIndex = 0;
+
+    nextButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        saveAnswer();
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= NUM_QUESTIONS) {
+          currentQuestionIndex = 0;
+        }
+        updateDisplay();
+      }
+    });
+
+    previousButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        saveAnswer();
+        currentQuestionIndex--;
+        if (currentQuestionIndex < 0) {
+          currentQuestionIndex = NUM_QUESTIONS - 1;
+        }
+        updateDisplay();
+      }
+    });
   }
 
   /**
@@ -155,28 +180,32 @@ public class MathExpressionPanel extends JPanel {
       userAnswers[currentQuestionIndex] = 0;
     }
 
-    nextButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        saveAnswer();
-        currentQuestionIndex++;
-        if (currentQuestionIndex >= NUM_QUESTIONS) {
-          currentQuestionIndex = 0;
-        }
-        updateDisplay();
-      }
-    });
+  }
+  
+  private void gradeQuiz()
+  {
+    saveAnswer();
 
-    previousButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        saveAnswer();
-        currentQuestionIndex--;
-        if (currentQuestionIndex < 0) {
-          currentQuestionIndex = NUM_QUESTIONS - 1;
-        }
-        updateDisplay();
+    int numCorrect = 0;
+
+    String mistakesList = "";
+
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
+      int correctAnswer = expressions[i].calculate();
+      
+      if (userAnswers[i] == correctAnswer)
+      {
+        numCorrect++;
       }
-    });
+      else
+      {
+        mistakesList = expressions[i].toString() + " = " + correctAnswer + ", but your answer was "
+                       + userAnswers[i] + "/n";
+      }
+      }
+    }
+
+
+
   }
 }
