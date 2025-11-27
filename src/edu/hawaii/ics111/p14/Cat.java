@@ -7,7 +7,8 @@ package edu.hawaii.ics111.p14;
  *
  * @author CT Reatherford
  */
-class Cat {
+public class Cat implements Comparable<Cat>
+{
   /**
    * The cat's name.
    */
@@ -34,7 +35,7 @@ class Cat {
    * @param hungry boolean for determination of hunger status of cat.
    * @throws IllegalArgumentException if age is less than 0.
    */
-  Cat(String name, String breed, int age, boolean hungry) {
+  public Cat(String name, String breed, int age, boolean hungry) {
     this.name = name;
     this.breed = breed;
     if (age < 0) {
@@ -53,7 +54,7 @@ class Cat {
    * @param age   the age of the cat.
    * @throws IllegalArgumentException if age is less than 0.
    */
-  Cat(String name, String breed, int age) {
+  public Cat(String name, String breed, int age) {
     this.name = name;
     this.breed = breed;
     if (age < 0) {
@@ -68,7 +69,7 @@ class Cat {
    *
    * @return the cat's name.
    */
-  String getName() {
+  public String getName() {
     return name;
   }
 
@@ -77,7 +78,7 @@ class Cat {
    *
    * @return the cat's breed
    */
-  String getBreed() {
+  public String getBreed() {
     return breed;
   }
 
@@ -86,7 +87,7 @@ class Cat {
    *
    * @return the cat's age.
    */
-  int getAge() {
+  public int getAge() {
     return age;
   }
 
@@ -95,7 +96,7 @@ class Cat {
    *
    * @return returns true if hungry, otherwise false.
    */
-  boolean isHungry() {
+  public boolean isHungry() {
     return hungry;
   }
 
@@ -104,7 +105,7 @@ class Cat {
    *
    * @param name the new name of the cat1.
    */
-  void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -113,7 +114,7 @@ class Cat {
    *
    * @param hungry true if cat is hungry, otherwise false.
    */
-  void setHungry(boolean hungry) {
+  public void setHungry(boolean hungry) {
     this.hungry = hungry;
   }
 
@@ -123,4 +124,26 @@ class Cat {
   public void increaseAge() {
     this.age++;
   }
+
+  /**
+   * Returns the string representation of the cat.
+   *
+   * @return the string representation of the cat.
+   */
+  @Override
+  public String toString() {
+    return name + " (" + breed + ", " + age + " years old)";
+  }
+  
+  /**
+   * Compares Cat object with other Cat object for alphabetical order sorting.
+   *
+   * @param otherCat   The Cat to be compared.
+   * @return   An integer corresponding to order placement of the cat.
+   */
+   @Override
+   public int compareTo(Cat otherCat)
+   {
+     return this.name.compareTo(otherCat.name);
+   }
 }
