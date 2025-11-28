@@ -106,7 +106,6 @@ public class CatRoom
 
     try 
     {
-     
       Cat newCat = new Cat(name, breed, age);
       room.add(newCat);
       System.out.println(newCat.toString() + " entered the room");

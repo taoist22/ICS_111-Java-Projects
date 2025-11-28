@@ -35,10 +35,12 @@ public class Cat implements Comparable<Cat>
    * @param hungry boolean for determination of hunger status of cat.
    * @throws IllegalArgumentException if age is less than 0.
    */
-  public Cat(String name, String breed, int age, boolean hungry) {
+  public Cat(String name, String breed, int age, boolean hungry)
+  {
     this.name = name;
     this.breed = breed;
-    if (age < 0) {
+    if (age < 0)
+    {
       throw new IllegalArgumentException("Age must be greater than 0.");
     }
     this.age = age;
@@ -54,10 +56,12 @@ public class Cat implements Comparable<Cat>
    * @param age   the age of the cat.
    * @throws IllegalArgumentException if age is less than 0.
    */
-  public Cat(String name, String breed, int age) {
+  public Cat(String name, String breed, int age)
+  {
     this.name = name;
     this.breed = breed;
-    if (age < 0) {
+    if (age < 0)
+    {
       throw new IllegalArgumentException("Age must be greater than 0.");
     }
     this.age = age;
@@ -69,7 +73,8 @@ public class Cat implements Comparable<Cat>
    *
    * @return the cat's name.
    */
-  public String getName() {
+  public String getName()
+  {
     return name;
   }
 
@@ -78,7 +83,8 @@ public class Cat implements Comparable<Cat>
    *
    * @return the cat's breed
    */
-  public String getBreed() {
+  public String getBreed()
+  {
     return breed;
   }
 
@@ -87,7 +93,8 @@ public class Cat implements Comparable<Cat>
    *
    * @return the cat's age.
    */
-  public int getAge() {
+  public int getAge()
+  {
     return age;
   }
 
@@ -96,7 +103,8 @@ public class Cat implements Comparable<Cat>
    *
    * @return returns true if hungry, otherwise false.
    */
-  public boolean isHungry() {
+  public boolean isHungry()
+  {
     return hungry;
   }
 
@@ -105,7 +113,8 @@ public class Cat implements Comparable<Cat>
    *
    * @param name the new name of the cat1.
    */
-  public void setName(String name) {
+  public void setName(String name)
+  {
     this.name = name;
   }
 
@@ -114,14 +123,16 @@ public class Cat implements Comparable<Cat>
    *
    * @param hungry true if cat is hungry, otherwise false.
    */
-  public void setHungry(boolean hungry) {
+  public void setHungry(boolean hungry)
+  {
     this.hungry = hungry;
   }
 
   /**
    * Increments the age of the cat by 1.
    */
-  public void increaseAge() {
+  public void increaseAge()
+  {
     this.age++;
   }
 
@@ -131,19 +142,20 @@ public class Cat implements Comparable<Cat>
    * @return the string representation of the cat.
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     return name + " (" + breed + ", " + age + " years old)";
   }
-  
+
   /**
    * Compares Cat object with other Cat object for alphabetical order sorting.
    *
-   * @param otherCat   The Cat to be compared.
-   * @return   An integer corresponding to order placement of the cat.
+   * @param otherCat The Cat to be compared.
+   * @return An integer corresponding to order placement of the cat.
    */
-   @Override
-   public int compareTo(Cat otherCat)
-   {
-     return this.name.compareTo(otherCat.name);
-   }
+  @Override
+  public int compareTo(Cat otherCat)
+  {
+    return this.name.compareTo(otherCat.name);
+  }
 }
