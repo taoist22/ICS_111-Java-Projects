@@ -13,8 +13,8 @@ public class LoginCredentials
   private String password;
   /**
   * Constructor for LoginCredentials.
-  * @param username
-  * @param password
+  * @param username  the username for this credential.
+  * @param password  the password for this credential.
   * @throws IllegalArgumentException if username or password are null or empty
   */
   public LoginCredentials(String username, String password)
@@ -67,5 +67,24 @@ public class LoginCredentials
       throw new IllegalArgumentException("Password must not be null or empty");
     }
     this.password = password;
+  }
+  /**
+   * Compares this object with the specified object for equality.
+   * @param obj   the object to compare with this object.
+   * @return      true if the objects are equal, false otherwise.
+   */
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass())
+    {
+      return false;
+    }
+    LoginCredentials other = (LoginCredentials) obj;
+    return username.equals(other.username) && password.equals(other.password);
   }
 }
