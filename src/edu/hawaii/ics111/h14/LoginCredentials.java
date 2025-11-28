@@ -1,6 +1,10 @@
 package edu.hawaii.ics111.h14;
 
-
+/**
+ * Class for holding login credentials.
+ *
+ * @author CT Reatherford.
+ */
 public class LoginCredentials
 {
   /**
@@ -44,8 +48,8 @@ public class LoginCredentials
   }
   /**
    * Sets the username.
-   * @param username.
-   * @throws IllegalArgumentException if username is null or empty
+   * @param username The new username to set.
+   * @throws IllegalArgumentException If username is null or empty
    */
   public void setUsername(String username)
   {
@@ -57,8 +61,8 @@ public class LoginCredentials
   }
   /**
    * Sets the password.
-   * @param password.
-   * @throws IllegalArgumentException if password is null or empty
+   * @param password The new password to set.
+   * @throws IllegalArgumentException If password is null or empty
    */
   public void setPassword(String password)
   {
