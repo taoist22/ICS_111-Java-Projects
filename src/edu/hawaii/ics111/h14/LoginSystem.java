@@ -24,7 +24,7 @@ public class LoginSystem
     if (args.length == 0)
     {
       JOptionPane.showMessageDialog(null,
-                                    "Must provide login credentials file as a command line argument..", "Missing Input File", JOptionPane.ERROR_MESSAGE);
+                                    "Must provide login credentials file as a command line argument", "Missing Input File", JOptionPane.ERROR_MESSAGE);
       System.exit(1);
     }
     ArrayList<LoginCredentials> validCredentials = new ArrayList<LoginCredentials>();
@@ -59,7 +59,7 @@ public class LoginSystem
     catch (FileNotFoundException e)
     {
       JOptionPane.showMessageDialog(null,
-                                    "Cannot find login credentials file.", "Invalid Input File", JOptionPane.ERROR_MESSAGE);
+                                    "Cannot find login credentials file", "Invalid Input File", JOptionPane.ERROR_MESSAGE);
       System.exit(1);
     }
 

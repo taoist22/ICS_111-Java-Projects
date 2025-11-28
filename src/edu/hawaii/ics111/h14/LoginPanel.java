@@ -17,8 +17,7 @@ import java.util.List;
 /**
  * A login system program in Java.
  * Extra Credit: Implemented feature to disable login button until after text is
- * entered in
- * both username and password fields.
+ * entered in both username and password fields.
  *
  * @author CT Reatherford.
  */
