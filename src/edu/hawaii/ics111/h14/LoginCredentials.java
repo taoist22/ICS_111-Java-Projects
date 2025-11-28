@@ -85,6 +85,15 @@ public class LoginCredentials
       return false;
     }
     LoginCredentials other = (LoginCredentials) obj;
-    return username.equals(other.username) && password.equals(other.password);
+    return this.username.equals(other.username) && this.password.equals(other.password);
+  }
+  /**
+   * Returns a string representation of this object.
+   * @return   a string representation of this object.
+   */
+  @Override
+  public String toString()
+  {
+    return "LoginCredentials [username=" + username + ", password=" + password + "]";
   }
 }
