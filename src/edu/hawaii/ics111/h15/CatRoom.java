@@ -40,7 +40,8 @@ public class CatRoom
       System.out.println("1: Add a cat");
       System.out.println("2: List all cats");
       System.out.println("3: Remove a cat");
-      System.out.println("4: Exit");
+      System.out.println("4. Retrieve a cat");
+      System.out.println("5: Exit");
 
       if (scanner.hasNextInt())
       {
@@ -51,7 +52,7 @@ public class CatRoom
       else
       {
 
-        System.out.println("Invalid input; must type in a number 1, 2, 3, or 4");
+        System.out.println("Invalid input; must type in a number 1, 2, 3, 4 or 5");
         scanner.nextLine();
         System.out.println();
         continue;
@@ -69,10 +70,13 @@ public class CatRoom
         removeCat();
         break;
       case 4:
+        retrieveCat();
+        break;
+      case 5:
         isRunning = false;
         break;
       default:
-        System.out.println("Invalid input; must type in a number 1, 2, 3, or 4");
+        System.out.println("Invalid input; must type in a number 1, 2, 3, 4 or 5");
       }
       System.out.println();
     }
@@ -107,7 +111,7 @@ public class CatRoom
     try
     {
       Cat newCat = new Cat(name, breed, age);
-      int insertIndex = 0;
+      int insertIndex = room.size();
 
       for (int i = 0; i < room.size(); i++)
       {
@@ -117,10 +121,6 @@ public class CatRoom
         {
           insertIndex = i;
           break;
-        }
-        else if (newCat.getName().compareToIgnoreCase(existingCat.getName()) > 0)
-        {
-          insertIndex = i + 1;
         }
       }
       room.add(insertIndex, newCat);
@@ -137,10 +137,101 @@ public class CatRoom
    */
   private static void listCats()
   {
-    Collections.sort(room);
     System.out.println(room.toString());
   }
 
+  private static void retrieveCat()
+  {
+    if (room.isEmpty())
+    {
+      System.out.println("There are no cats in the room to retrieve");
+      return;
+    }
+
+    System.out.println("How do you want to find the cat? (type in \"1\", \"2\", or \"3\")");
+    System.out.println("1: By name");
+    System.out.println("2: By breed");
+    System.out.println("3: By age");
+
+    if (!scanner.hasNext())
+    {
+      System.out.println("Invalid input; must type in a number 1, 2, or 3");
+      scanner.nextLine();
+      return;
+    }
+    int searchType = scanner.nextInt();
+    scanner.nextLine();
+
+    switch (searchType)
+    {
+    case 1:
+
+      System.out.println("What is the name of the cat to find?");
+      String nameToFind = scanner.nextLine();
+
+      Cat foundCat = binarySearchCatByName(nameToFind);
+
+      if (foundCat != null)
+      {
+        System.out.println("Found " + foundCat.toString());
+      }
+      else
+      {
+        System.out.println("Did not find a cat named \"" + nameToFind + "\"");
+      }
+      break;
+
+    case 2:
+
+      System.out.println("What is the breed of the cat to find?");
+      String breedToFind = scanner.nextLine();
+
+      ArrayList<Cat> breedMatches = linearSearchCatByBreed(breedToFind);
+
+      if (!breedMatches.isEmpty())
+      {
+        System.out.println("The cats of the \"" + breedToFind + "\" breed are:");
+      }
+      else
+      {
+        System.out.println("Did not find any cats with breed \"" + breedToFind + "\"");
+      }
+      break;
+
+    case 3:
+      System.out.println("What is the age of the cat to find?");
+      if (!scanner.hasNextInt())
+      {
+        System.out.println("Age of the cat must be greater than or equal to 0.");
+        scanner.nextLine();
+        return;
+      }
+
+      int ageToFind = scanner.nextInt();
+      scanner.nextLine();
+
+      if (ageToFind < 0)
+      {
+        System.out.println("Did not find a cat with age \"" + ageToFind + "\"");
+        return;
+      }
+
+      ArrayList<Cat> ageMatches = linearSearchCatByAge(ageToFind);
+
+      if (!ageMatches.isEmpty())
+      {
+        System.out.println("The cats of the \"" + ageToFind + "\" years old are: " + ageMatches.toString());
+      }
+      else
+      {
+        System.out.println("Did not find any cats with age \"" + ageToFind + "\"");
+      }
+      break;
+
+    default:
+      System.out.println("Invalid input; must type in a number 1, 2, or 3");
+    }
+  }
   /**
    * Prompts the user to select a cat by name and removes it from the room if
    * found.
@@ -162,16 +253,7 @@ public class CatRoom
     System.out.println("Which cat do you want to remove (type in one of [" + String.join(", ", catNames) + "])?");
     String catToRemoveName = scanner.nextLine();
 
-    Cat catToRemove = null;
-
-    for (Cat cat : room)
-    {
-      if (cat.getName().equals(catToRemoveName))
-      {
-        catToRemove = cat;
-        break;
-      }
-    }
+    Cat catToRemove = binarySearchCatByName(catToRemoveName);
 
     if (catToRemove != null)
     {
@@ -182,5 +264,75 @@ public class CatRoom
     {
       System.out.println("Did not find a cat named \"" + catToRemoveName + "\" to remove");
     }
+
+  }
+  /**
+    * Search for a Cat in the room by the Cat's name using binary search.
+    *
+    * @param targetName  The name of the Cat to find.
+    * @return The Cat object if found, null otherwise.
+    */
+  private static Cat binarySearchCatByName(String targetName)
+  {
+    int low = 0;
+    int high = room.size() - 1;
+
+    while (low <= high)
+    {
+      int mid = low + (high - low) / 2;
+
+      String midCatName = room.get(mid).getName();
+      int comparison = targetName.compareToIgnoreCase(midCatName);
+
+      if (comparison == 0)
+      {
+        return room.get(mid);
+      }
+      else if (comparison < 0)
+      {
+        high = mid - 1;
+      }
+      else
+      {
+        low = mid + 1;
+      }
+    }
+    return null;
+  }
+  /**
+   * Searches for all Cats in the room that match the specified breed using linear search.
+   *
+   * @param targetBreed  The breed to search for.
+   * @return A list of Cat objects that match the specified breed.
+   */
+  private static ArrayList<Cat> linearSearchCatByBreed(String targetBreed)
+  {
+    ArrayList<Cat> matchingCats = new ArrayList<>();
+    for (Cat cat : room)
+    {
+      if (cat.getBreed().equalsIgnoreCase(targetBreed))
+      {
+        matchingCats.add(cat);
+      }
+    }
+    return matchingCats;
+  }
+  /**
+   * Searches for all cats in the room that match the specified age using linear search.
+   *
+   * @param targetAge  The age to search for.
+   * @return Am list of Cat objects that match the specified age.
+   */
+  private static ArrayList<Cat> linearSearchCatByAge(int targetAge)
+  {
+    ArrayList<Cat> matchingCats = new ArrayList<>();
+    for (Cat cat : room)
+    {
+      if (cat.getAge() == targetAge)
+      {
+        matchingCats.add(cat);
+      }
+    }
+    return matchingCats;
   }
 }
