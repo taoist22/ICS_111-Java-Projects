@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests the Cat class.
@@ -13,55 +15,70 @@ import static org.junit.Assert.assertEquals;
 public class CatTest
 {
   /**
-   * Testing first cat object.
+   * Instance variable for testing first cat object.
    */
   private Cat cat1;
   /**
-   * Testing second cat object.
+   * Instance variable for testing second cat object.
    */
   private Cat cat2;
-
   /**
-   * Fixture initialization (common initialization for all tests).
+   * Instance variable for testing third cat object.
+   */
+  private Cat cat3;
+  /**
+   * Instance variable for testing fourth cat object.
+   */
+  private Cat cat4;
+  /**
+   * Initialization for all tests.
    */
   @Before
   public void setUp()
   {
-    cat1 = new Cat("Tik", "Bengal", 3, false);
+    cat1 = new Cat("Tik", "Bengal", 3);
     cat2 = new Cat("Tok", "American Shorthair", 2);
+    cat3 = new Cat("Alpha", "Siamese", 5);
+    cat4 = new Cat("Beta", "Persian", 4);
   }
 
   /**
-   * Test constructor with all parameters.
+   * Test the primary 3 parameter constructor.
    */
   @Test
-  public void testConstructorAll()
+  public void testConstructorOne()
   {
     assertEquals("Tik", cat1.getName());
     assertEquals("Bengal", cat1.getBreed());
     assertEquals(3, cat1.getAge());
-    assertEquals(false, cat1.isHungry());
   }
-
   /**
-  * Test constructor with 3 parameters and hungry assumed.
-  */
+   * Test the second instance of the 3 parameter constructor.
+   */
   @Test
-  public void testConstructorThree()
+  public void testConstructorTwo()
   {
     assertEquals("Tok", cat2.getName());
     assertEquals("American Shorthair", cat2.getBreed());
     assertEquals(2, cat2.getAge());
-    assertEquals(true, cat2.isHungry());
   }
 
   /**
    * Tests for constructor IllegalArgumentException thrown when age is less than 0.
    */
-  @Test(expected = IllegalArgumentException.class)
-  public void testConstructorInvalidAge()
+  @Test
+  public void testConstructorThrowsInvalidAge()
   {
-    Cat invalidCat = new Cat("Daisy", "Siamese", -1, true);
+    try
+    {
+      Cat invalidCat = new Cat("Daisy", "Siamese", -1);
+
+      fail("There should be an IllegalArgumentException thrown for negative age.");
+    }
+    catch (IllegalArgumentException e)
+    {
+
+    }
   }
 
   /**
@@ -95,24 +112,6 @@ public class CatTest
   }
 
   /**
-   * Tests cat is hungry as true and false.
-   */
-  @Test
-  public void testHungry()
-  {
-    // cat1 hungry = false.
-    assertEquals("cat1 should begin as not hungry", false,  cat1.isHungry());
-
-    // Test setting cat1 hungry = true
-    cat1.setHungry(true);
-    assertEquals("cat1 should now be hungry", true, cat1.isHungry());
-
-    // Test resetting cat1 hungry = false
-    cat1.setHungry(false);
-    assertEquals("cat1 should not be hungry again", false, cat1.isHungry());
-  }
-
-  /**
    * Test incrementing age by one.
    */
   @Test
@@ -143,6 +142,19 @@ public class CatTest
     cat2.setName(newName);
     assertEquals("cat2 should have the name Blackie", newName, cat2.getName());
   }
+  /**
+   * Test the compareTo method for correct sorting alphabetically by name.
+   */
+  @Test
+  public void testcompareTo()
+  {
+    int result1 = cat3.compareTo(cat4);
+    assertTrue("Alpha should be alphabetically before Beta", result1 < 0);
 
+    int result2 = cat4.compareTo(cat3);
+    assertTrue("Beta should be alphabetically after Alpha", result2 > 0);
+
+    assertEquals("Exact name matches should return 0", 0, cat1.compareTo(cat1));
+  }
 }
 

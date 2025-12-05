@@ -2,7 +2,6 @@ package edu.hawaii.ics111.h15;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Collections;
 
 /**
  * Representation of a room to store Cat objects that will be in current room.
@@ -60,23 +59,23 @@ public class CatRoom
 
       switch (choice)
       {
-      case 1:
-        addCat();
-        break;
-      case 2:
-        listCats();
-        break;
-      case 3:
-        removeCat();
-        break;
-      case 4:
-        retrieveCat();
-        break;
-      case 5:
-        isRunning = false;
-        break;
-      default:
-        System.out.println("Invalid input; must type in a number 1, 2, 3, 4 or 5");
+        case 1:
+          addCat();
+          break;
+        case 2:
+          listCats();
+          break;
+        case 3:
+          removeCat();
+          break;
+        case 4:
+          retrieveCat();
+          break;
+        case 5:
+          isRunning = false;
+          break;
+        default:
+          System.out.println("Invalid input; must type in a number 1, 2, 3, 4 or 5");
       }
       System.out.println();
     }
@@ -100,7 +99,7 @@ public class CatRoom
 
     if (!scanner.hasNextInt())
     {
-      System.out.println("Age of the cat must be greater than or equal to 0.");
+      System.out.println("Age of the cat must be an integer.");
       scanner.nextLine();
       return;
     }
@@ -137,9 +136,20 @@ public class CatRoom
    */
   private static void listCats()
   {
-    System.out.println(room.toString());
+    if (room.isEmpty())
+    {
+      System.out.println("The room is currently empty.");
+      return;
+    }
+    for (Cat cat : room)
+    {
+      System.out.println(cat);
+    }
   }
-
+  /**
+   * Prompts user to select attribute to search by, then calls the
+   * appropriate search method.
+   */
   private static void retrieveCat()
   {
     if (room.isEmpty())
@@ -153,9 +163,9 @@ public class CatRoom
     System.out.println("2: By breed");
     System.out.println("3: By age");
 
-    if (!scanner.hasNext())
+    if (!scanner.hasNextInt())
     {
-      System.out.println("Invalid input; must type in a number 1, 2, or 3");
+      System.out.println("Invalid input; must type in a number 1, 2, or 3 to select how to find the cat.");
       scanner.nextLine();
       return;
     }
@@ -164,72 +174,73 @@ public class CatRoom
 
     switch (searchType)
     {
-    case 1:
+    
+      case 1:
 
-      System.out.println("What is the name of the cat to find?");
-      String nameToFind = scanner.nextLine();
+        System.out.println("What is the name of the cat to find?");
+        String nameToFind = scanner.nextLine();
 
-      Cat foundCat = binarySearchCatByName(nameToFind);
+        Cat foundCat = binarySearchCatByName(nameToFind);
 
-      if (foundCat != null)
-      {
-        System.out.println("Found " + foundCat.toString());
-      }
-      else
-      {
-        System.out.println("Did not find a cat named \"" + nameToFind + "\"");
-      }
-      break;
+        if (foundCat != null)
+        {
+          System.out.println("Found " + foundCat.toString());
+        }
+        else
+        {
+          System.out.println("Did not find a cat named \"" + nameToFind + "\"");
+        }
+        break;
 
-    case 2:
+      case 2:
 
-      System.out.println("What is the breed of the cat to find?");
-      String breedToFind = scanner.nextLine();
+        System.out.println("What is the breed of the cat to find?");
+        String breedToFind = scanner.nextLine();
 
-      ArrayList<Cat> breedMatches = linearSearchCatByBreed(breedToFind);
+        ArrayList<Cat> breedMatches = linearSearchCatByBreed(breedToFind);
 
-      if (!breedMatches.isEmpty())
-      {
-        System.out.println("The cats of the \"" + breedToFind + "\" breed are:");
-      }
-      else
-      {
-        System.out.println("Did not find any cats with breed \"" + breedToFind + "\"");
-      }
-      break;
+        if (!breedMatches.isEmpty())
+        {
+          System.out.println("The cats of the \"" + breedToFind + "\" breed are: " + breedMatches.toString());
+        }
+        else
+        {
+          System.out.println("Did not find any cats with breed \"" + breedToFind + "\"");
+        }
+        break;
 
-    case 3:
-      System.out.println("What is the age of the cat to find?");
-      if (!scanner.hasNextInt())
-      {
-        System.out.println("Age of the cat must be greater than or equal to 0.");
+      case 3:
+        System.out.println("What is the age of the cat to find?");
+        if (!scanner.hasNextInt())
+        {
+          System.out.println("Age of the cat must be an integer.");
+          scanner.nextLine();
+          return;
+        }
+
+        int ageToFind = scanner.nextInt();
         scanner.nextLine();
-        return;
-      }
 
-      int ageToFind = scanner.nextInt();
-      scanner.nextLine();
+        if (ageToFind < 0)
+        {
+          System.out.println("Did not find a cat with age \"" + ageToFind + "\"");
+          return;
+        }
 
-      if (ageToFind < 0)
-      {
-        System.out.println("Did not find a cat with age \"" + ageToFind + "\"");
-        return;
-      }
+        ArrayList<Cat> ageMatches = linearSearchCatByAge(ageToFind);
 
-      ArrayList<Cat> ageMatches = linearSearchCatByAge(ageToFind);
+        if (!ageMatches.isEmpty())
+        {
+          System.out.println("The cats of the \"" + ageToFind + "\" years old are: " + ageMatches.toString());
+        }
+        else
+        {
+          System.out.println("Did not find any cats with age \"" + ageToFind + "\"");
+        }
+        break;
 
-      if (!ageMatches.isEmpty())
-      {
-        System.out.println("The cats of the \"" + ageToFind + "\" years old are: " + ageMatches.toString());
-      }
-      else
-      {
-        System.out.println("Did not find any cats with age \"" + ageToFind + "\"");
-      }
-      break;
-
-    default:
-      System.out.println("Invalid input; must type in a number 1, 2, or 3");
+      default:
+        System.out.println("Invalid input; must type in a number 1, 2, or 3");
     }
   }
   /**

@@ -21,10 +21,6 @@ public class Cat implements Comparable<Cat>
    * The cat's age.
    */
   private int age;
-  /**
-   * If the cat is hungry.
-   */
-  private boolean hungry;
 
   /**
    * Construction of cat object with name, breed, age and hunger status.
@@ -32,28 +28,6 @@ public class Cat implements Comparable<Cat>
    * @param name   the name of the cat.
    * @param breed  the breed of the cat.
    * @param age    the age of the cat.
-   * @param hungry boolean for determination of hunger status of cat.
-   * @throws IllegalArgumentException if age is less than 0.
-   */
-  public Cat(String name, String breed, int age, boolean hungry)
-  {
-    this.name = name;
-    this.breed = breed;
-    if (age < 0)
-    {
-      throw new IllegalArgumentException("Age must be greater than 0.");
-    }
-    this.age = age;
-    this.hungry = hungry;
-  }
-
-  /**
-   * Construction of cat object always hungry status and includes name, breed, and
-   * age.
-   *
-   * @param name  the name of the cat.
-   * @param breed the breed of the cat.
-   * @param age   the age of the cat.
    * @throws IllegalArgumentException if age is less than 0.
    */
   public Cat(String name, String breed, int age)
@@ -65,7 +39,6 @@ public class Cat implements Comparable<Cat>
       throw new IllegalArgumentException("Age must be greater than 0.");
     }
     this.age = age;
-    hungry = true;
   }
 
   /**
@@ -99,16 +72,6 @@ public class Cat implements Comparable<Cat>
   }
 
   /**
-   * Returns true if the cat is hungry.
-   *
-   * @return returns true if hungry, otherwise false.
-   */
-  public boolean isHungry()
-  {
-    return hungry;
-  }
-
-  /**
    * Sets the name of the cat1.
    *
    * @param name the new name of the cat1.
@@ -116,16 +79,6 @@ public class Cat implements Comparable<Cat>
   public void setName(String name)
   {
     this.name = name;
-  }
-
-  /**
-   * Sets the hunger state of the cat.
-   *
-   * @param hungry true if cat is hungry, otherwise false.
-   */
-  public void setHungry(boolean hungry)
-  {
-    this.hungry = hungry;
   }
 
   /**
