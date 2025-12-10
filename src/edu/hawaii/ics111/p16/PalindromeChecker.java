@@ -11,7 +11,7 @@ public class PalindromeChecker
    * Method to check whether a string is a palindrome or not.
    *
    * @param str  The string to be checked.
-   * @return false  If the string is not a palindrome, otherwise true.
+   * @return false  True if the string is a palindrome, otherwise false.
    */
   public static boolean isPalindrome(String str)
   {
