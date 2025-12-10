@@ -10,7 +10,8 @@ public class PalindromeChecker
   /**
    * Method to check whether a string is a palindrome or not.
    *
-   * @return true  If the string is not a palindrome, otherwise false.
+   * @param str  The string to be checked.
+   * @return false  If the string is not a palindrome, otherwise true.
    */
   public static boolean isPalindrome(String str)
   {
@@ -23,6 +24,6 @@ public class PalindromeChecker
       return isPalindrome(str.substring(1, str.length() - 1));
     }
 
-
+    return false;
   }
 }
